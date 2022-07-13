@@ -1,5 +1,7 @@
 package com.bridgelabz;
 
+import java.util.Scanner;
+
 public class GamblingSimulator {
     public static void main(String[] args) {
         int totalWinningAmount=0;
@@ -21,11 +23,23 @@ public class GamblingSimulator {
                 looseDaysCount++;
                 totalWinningAmount=totalWinningAmount+winningAmount;
             }
-            System.out.println("total winning amount "+totalWinningAmount);
         }
+
         System.out.println("\ntotal winning amount "+totalWinningAmount);
         System.out.println("won days = "+winDaysCount);
         System.out.println("loose days = "+looseDaysCount);
+        if (totalWinningAmount > 0) {
+            System.out.println("you Won ! ");
+            System.out.println("continue playing (y/n) ");
+            Scanner scanner=new Scanner(System.in);
+            if (scanner.next().charAt(0)=='y') {
+                main(null);
+            }
+        }else if (totalWinningAmount < 0){
+            System.out.println("you lost the game");
+        }else {
+            System.out.println("no win or loss");
+        }
     }
     static int doBet(int bid){
         int random=(int)(Math.random()*10)%2;
