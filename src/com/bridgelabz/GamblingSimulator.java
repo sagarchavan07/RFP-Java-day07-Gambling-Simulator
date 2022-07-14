@@ -3,13 +3,34 @@ package com.bridgelabz;
 import java.util.Scanner;
 
 public class GamblingSimulator {
+    static int totalWinningAmount=0;
+    static int winDaysCount=0;
+    static int looseDaysCount=0;
+    static final int MAX_DAYS=20;
+    static final int EVERY_DAY_STAKE=100;
+
     public static void main(String[] args) {
-        int totalWinningAmount=0;
-        int winDaysCount=0;
-        int looseDaysCount=0;
-        for (int day = 1; day <= 20; day++) {
-            int dayStake=100;
-            int winningAmount=0;
+
+        Gambler();
+        if (totalWinningAmount > 0) {
+            System.out.println("you Won ! ");
+            System.out.print("continue playing (y/n) : ");
+            Scanner scanner=new Scanner(System.in);
+            if (scanner.next().equalsIgnoreCase("y")) {
+                Gambler();
+            }
+        }else if (totalWinningAmount < 0){
+            System.out.println("you lost the game");
+        }else {
+            System.out.println("no win or loss");
+        }
+    }
+
+    static void Gambler(){
+
+        for (int day = 1; day <= MAX_DAYS; day++) {
+            int dayStake=EVERY_DAY_STAKE;
+            int winningAmount;
             System.out.println("#day"+day);
             while (dayStake<150 && dayStake>50){
                 dayStake+=doBet(1);
@@ -28,25 +49,14 @@ public class GamblingSimulator {
         System.out.println("\ntotal winning amount "+totalWinningAmount);
         System.out.println("won days = "+winDaysCount);
         System.out.println("loose days = "+looseDaysCount);
-        if (totalWinningAmount > 0) {
-            System.out.println("you Won ! ");
-            System.out.println("continue playing (y/n) ");
-            Scanner scanner=new Scanner(System.in);
-            if (scanner.next().charAt(0)=='y') {
-                main(null);
-            }
-        }else if (totalWinningAmount < 0){
-            System.out.println("you lost the game");
-        }else {
-            System.out.println("no win or loss");
-        }
+
     }
-    static int doBet(int bid){
+    static int doBet(int bidPrice){
         int random=(int)(Math.random()*10)%2;
         if (random == 1) {
-            return 1;
+            return +bidPrice;
         }else{
-            return -1;
+            return -bidPrice;
         }
     }
 }
